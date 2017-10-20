@@ -1,123 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="flowable">
-  <process id="autoProcess" name="Auto Task Process" isExecutable="true">
-    <startEvent id="startEvent"></startEvent>
-    <userTask id="classifyTask" name="Thẩm định lỗi">
-    </userTask>
-    <exclusiveGateway id="classifyGateway"></exclusiveGateway>
-    <sequenceFlow id="sid-3614B747-AADE-481D-8473-20A37B0B8DFC" sourceRef="classifyTask" targetRef="sid-30C078F7-8C51-436E-A9B1-FBB5F2613267"></sequenceFlow>
-    <userTask id="issueLevel0" name="Lỗi cấp 0"></userTask>
-    <userTask id="issueLevel1" name="Lỗi cấp 1"></userTask>
-    <userTask id="issueLevel2" name="Lỗi cấp 2"></userTask>
-    <userTask id="issueLevel3" name="Lỗi cấp 3"></userTask>
-    <endEvent id="issueLevel0End"></endEvent>
-    <userTask id="processingIssueLevel1" name="Quy trình xử lý lỗi cấp 1"></userTask>
-    <userTask id="processingIssueLevel2" name="Quy trình xử lý lỗi cấp 2"></userTask>
-    <userTask id="processingIssueLevel3" name="Quy trình xử lý lỗi cấp 3"></userTask>
-    <sequenceFlow id="sid-EE74F3F1-BBEF-4AAF-AD89-063A29B4359E" sourceRef="issueLevel0" targetRef="issueLevel0End"></sequenceFlow>
-    <endEvent id="issueLevel1End"></endEvent>
-    <endEvent id="issueLevel2End"></endEvent>
-    <endEvent id="issueLevel3End"></endEvent>
-    <sequenceFlow id="sid-291A12E0-D500-4F8D-B980-E915AB0A7627" sourceRef="sid-0E353601-23BA-42BB-88CE-44FB8437C2CB" targetRef="classifyTask"></sequenceFlow>
-    <sequenceFlow id="sid-4ABEF0AA-1C9F-4EE7-8FEF-4D5A38ED6DFF" name="issueLevel = 0" sourceRef="sid-30C078F7-8C51-436E-A9B1-FBB5F2613267" targetRef="issueLevel0"></sequenceFlow>
-    <sequenceFlow id="sid-524D6581-7E99-440B-81B2-8C9E19DDE345" name="issueLevel = 1" sourceRef="sid-30C078F7-8C51-436E-A9B1-FBB5F2613267" targetRef="issueLevel1"></sequenceFlow>
-    <sequenceFlow id="sid-60D1651F-833D-4B4A-8F12-764FA90EEB78" name="issueLevel = 2" sourceRef="sid-30C078F7-8C51-436E-A9B1-FBB5F2613267" targetRef="issueLevel2"></sequenceFlow>
-    <sequenceFlow id="sid-79629822-4841-4746-B143-2A5B5EFB70A9" name="issueLevel = 3" sourceRef="sid-30C078F7-8C51-436E-A9B1-FBB5F2613267" targetRef="issueLevel3"></sequenceFlow>
-    <sequenceFlow id="sid-64B87D62-D07D-436A-A521-56F35761ECD0" sourceRef="processingIssueLevel1" targetRef="issueLevel1End"></sequenceFlow>
-    <sequenceFlow id="sid-C9E7BDB4-7E14-4F75-87F2-F60D76DDF229" sourceRef="issueLevel1" targetRef="processingIssueLevel1"></sequenceFlow>
-    <sequenceFlow id="sid-6CC6CF1A-69B5-4430-A472-7C47BE5B434A" sourceRef="issueLevel2"></sequenceFlow>
-    <sequenceFlow id="sid-48EA0D7B-808E-405F-B098-7F5C5CDA61A8" sourceRef="processingIssueLevel2" targetRef="issueLevel2End"></sequenceFlow>
-    <sequenceFlow id="sid-D460F595-5ADF-4A43-A633-2F41ED475CAA" sourceRef="issueLevel3"></sequenceFlow>
-    <sequenceFlow id="sid-8DCDAFF8-21B5-4B9C-98E5-F4D62D5F3465" sourceRef="processingIssueLevel3" targetRef="issueLevel3End"></sequenceFlow>
-  </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_autoProcess">
-    <bpmndi:BPMNPlane bpmnElement="autoProcess" id="BPMNPlane_autoProcess">
-      <bpmndi:BPMNShape bpmnElement="sid-0E353601-23BA-42BB-88CE-44FB8437C2CB" id="BPMNShape_sid-0E353601-23BA-42BB-88CE-44FB8437C2CB">
-        <omgdc:Bounds height="30.0" width="30.0" x="690.0" y="45.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="classifyTask" id="BPMNShape_classifyTask">
-        <omgdc:Bounds height="40.0" width="147.0" x="631.5" y="255.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-30C078F7-8C51-436E-A9B1-FBB5F2613267" id="BPMNShape_sid-30C078F7-8C51-436E-A9B1-FBB5F2613267">
-        <omgdc:Bounds height="40.0" width="40.0" x="685.0" y="330.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="issueLevel0" id="BPMNShape_issueLevel0">
-        <omgdc:Bounds height="40.0" width="147.0" x="345.0" y="465.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="issueLevel1" id="BPMNShape_issueLevel1">
-        <omgdc:Bounds height="40.0" width="147.0" x="540.0" y="465.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="issueLevel2" id="BPMNShape_issueLevel2">
-        <omgdc:Bounds height="40.0" width="147.0" x="750.0" y="465.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="issueLevel3" id="BPMNShape_issueLevel3">
-        <omgdc:Bounds height="40.0" width="147.0" x="960.0" y="465.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="issueLevel0End" id="BPMNShape_issueLevel0End">
-        <omgdc:Bounds height="28.0" width="28.0" x="404.5" y="585.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="processingIssueLevel1" id="BPMNShape_processingIssueLevel1">
-        <omgdc:Bounds height="79.0" width="164.0" x="531.5" y="585.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="processingIssueLevel2" id="BPMNShape_processingIssueLevel2">
-        <omgdc:Bounds height="79.0" width="164.0" x="741.5" y="585.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="processingIssueLevel3" id="BPMNShape_processingIssueLevel3">
-        <omgdc:Bounds height="79.0" width="164.0" x="951.5" y="585.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="issueLevel1End" id="BPMNShape_issueLevel1End">
-        <omgdc:Bounds height="28.0" width="28.0" x="599.5" y="735.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="issueLevel2End" id="BPMNShape_issueLevel2End">
-        <omgdc:Bounds height="28.0" width="28.0" x="809.5" y="735.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="issueLevel3End" id="BPMNShape_issueLevel3End">
-        <omgdc:Bounds height="28.0" width="28.0" x="1019.5" y="735.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="sid-EE74F3F1-BBEF-4AAF-AD89-063A29B4359E" id="BPMNEdge_sid-EE74F3F1-BBEF-4AAF-AD89-063A29B4359E">
-        <omgdi:waypoint x="418.5" y="505.0"></omgdi:waypoint>
-        <omgdi:waypoint x="418.5" y="585.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-C9E7BDB4-7E14-4F75-87F2-F60D76DDF229" id="BPMNEdge_sid-C9E7BDB4-7E14-4F75-87F2-F60D76DDF229">
-        <omgdi:waypoint x="613.5" y="505.0"></omgdi:waypoint>
-        <omgdi:waypoint x="613.5" y="585.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-60D1651F-833D-4B4A-8F12-764FA90EEB78" id="BPMNEdge_sid-60D1651F-833D-4B4A-8F12-764FA90EEB78">
-        <omgdi:waypoint x="714.379207920792" y="360.62079207920794"></omgdi:waypoint>
-        <omgdi:waypoint x="805.953531598513" y="465.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-8DCDAFF8-21B5-4B9C-98E5-F4D62D5F3465" id="BPMNEdge_sid-8DCDAFF8-21B5-4B9C-98E5-F4D62D5F3465">
-        <omgdi:waypoint x="1033.5" y="664.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1033.5" y="735.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-48EA0D7B-808E-405F-B098-7F5C5CDA61A8" id="BPMNEdge_sid-48EA0D7B-808E-405F-B098-7F5C5CDA61A8">
-        <omgdi:waypoint x="823.5" y="664.0"></omgdi:waypoint>
-        <omgdi:waypoint x="823.5" y="735.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-64B87D62-D07D-436A-A521-56F35761ECD0" id="BPMNEdge_sid-64B87D62-D07D-436A-A521-56F35761ECD0">
-        <omgdi:waypoint x="613.5" y="664.0"></omgdi:waypoint>
-        <omgdi:waypoint x="613.5" y="735.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-3614B747-AADE-481D-8473-20A37B0B8DFC" id="BPMNEdge_sid-3614B747-AADE-481D-8473-20A37B0B8DFC">
-        <omgdi:waypoint x="705.0" y="295.0"></omgdi:waypoint>
-        <omgdi:waypoint x="705.0" y="330.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-4ABEF0AA-1C9F-4EE7-8FEF-4D5A38ED6DFF" id="BPMNEdge_sid-4ABEF0AA-1C9F-4EE7-8FEF-4D5A38ED6DFF">
-        <omgdi:waypoint x="691.8819691577698" y="356.88196915776984"></omgdi:waypoint>
-        <omgdi:waypoint x="461.17657992565057" y="465.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-291A12E0-D500-4F8D-B980-E915AB0A7627" id="BPMNEdge_sid-291A12E0-D500-4F8D-B980-E915AB0A7627">
-        <omgdi:waypoint x="705.0" y="75.0"></omgdi:waypoint>
-        <omgdi:waypoint x="705.0" y="255.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-524D6581-7E99-440B-81B2-8C9E19DDE345" id="BPMNEdge_sid-524D6581-7E99-440B-81B2-8C9E19DDE345">
-        <omgdi:waypoint x="697.3763796909492" y="362.37637969094925"></omgdi:waypoint>
-        <omgdi:waypoint x="627.1802973977696" y="465.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-79629822-4841-4746-B143-2A5B5EFB70A9" id="BPMNEdge_sid-79629822-4841-4746-B143-2A5B5EFB70A9">
-        <omgdi:waypoint x="718.9745945945946" y="356.0254054054054"></omgdi:waypoint>
-        <omgdi:waypoint x="984.7267657992566" y="465.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-    </bpmndi:BPMNPlane>
-  </bpmndi:BPMNDiagram>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:flowable="http://flowable.org/bpmn" typeLanguage="http://www.w3.org/2001/XMLSchema"
+             expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+    <process id="autoProcess" name="Auto Task Process" isExecutable="true">
+        <startEvent id="startEvent"></startEvent>
+        <userTask id="classifyTask" name="Phân loại lỗi"></userTask>
+        <exclusiveGateway id="decision" default="toProcessLevel0"></exclusiveGateway>
+        <endEvent id="endEvent"></endEvent>
+        <userTask id="processLevel1" name="Xử lý lỗi cấp 1">
+            <extensionElements>
+                <flowable:taskListener event="create" class="com.flowable.listener.TaskListener"/>
+            </extensionElements>
+        </userTask>
+        <userTask id="processLevel2" name="Xử lý lỗi cấp 2">
+            <extensionElements>
+                <flowable:taskListener event="create" class="com.flowable.listener.TaskListener"/>
+            </extensionElements>
+        </userTask>
+        <userTask id="processLevel3" name="Xử lý lỗi cấp 3">
+            <extensionElements>
+                <flowable:taskListener event="create" class="com.flowable.listener.TaskListener"/>
+            </extensionElements>
+        </userTask>
+        <sequenceFlow id="toclassifyFlow" sourceRef="startEvent" targetRef="classifyTask"></sequenceFlow>
+        <sequenceFlow id="classifyFlow" sourceRef="classifyTask" targetRef="decision"></sequenceFlow>
+        <sequenceFlow id="toProcessLevel2" sourceRef="decision" targetRef="processLevel2">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${error_level == '2'}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="toProcessLevel3" sourceRef="decision" targetRef="processLevel3">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${error_level == '3'}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="toProcessLevel1" sourceRef="decision" targetRef="processLevel1">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${error_level == '1'}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="toProcessLevel0" sourceRef="decision" targetRef="endEvent"></sequenceFlow>
+        <sequenceFlow id="processLevel1Flow" sourceRef="processLevel1" targetRef="endEvent"></sequenceFlow>
+        <sequenceFlow id="processLevel2Flow" sourceRef="processLevel2" targetRef="endEvent"></sequenceFlow>
+        <sequenceFlow id="processLevel3Flow" sourceRef="processLevel3" targetRef="endEvent"></sequenceFlow>
+    </process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_autoProcess">
+        <bpmndi:BPMNPlane bpmnElement="autoProcess" id="BPMNPlane_autoProcess">
+            <bpmndi:BPMNShape bpmnElement="startEvent" id="BPMNShape_startEvent">
+                <omgdc:Bounds height="35.0" width="35.0" x="462.0" y="61.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="classifyTask" id="BPMNShape_classifyTask">
+                <omgdc:Bounds height="80.0" width="100.0" x="430.0" y="155.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="decision" id="BPMNShape_decision">
+                <omgdc:Bounds height="40.0" width="40.0" x="460.0" y="315.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endEvent" id="BPMNShape_endEvent">
+                <omgdc:Bounds height="35.0" width="35.0" x="466.0" y="555.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="processLevel1" id="BPMNShape_processLevel1">
+                <omgdc:Bounds height="80.0" width="100.0" x="631.0" y="408.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="processLevel2" id="BPMNShape_processLevel2">
+                <omgdc:Bounds height="80.0" width="100.0" x="785.0" y="408.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="processLevel3" id="BPMNShape_processLevel3">
+                <omgdc:Bounds height="80.0" width="100.0" x="935.0" y="405.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="toclassifyFlow" id="BPMNEdge_toclassifyFlow">
+                <omgdi:waypoint x="479.0" y="96.0"></omgdi:waypoint>
+                <omgdi:waypoint x="480.0" y="155.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="classifyFlow" id="BPMNEdge_classifyFlow">
+                <omgdi:waypoint x="480.0" y="235.0"></omgdi:waypoint>
+                <omgdi:waypoint x="480.0" y="315.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="toProcessLevel2" id="BPMNEdge_toProcessLevel2">
+                <omgdi:waypoint x="500.0" y="335.0"></omgdi:waypoint>
+                <omgdi:waypoint x="835.0" y="335.0"></omgdi:waypoint>
+                <omgdi:waypoint x="835.0" y="408.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="toProcessLevel3" id="BPMNEdge_toProcessLevel3">
+                <omgdi:waypoint x="500.0" y="335.0"></omgdi:waypoint>
+                <omgdi:waypoint x="985.0" y="335.0"></omgdi:waypoint>
+                <omgdi:waypoint x="985.0" y="405.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="toProcessLevel1" id="BPMNEdge_toProcessLevel1">
+                <omgdi:waypoint x="500.0" y="335.0"></omgdi:waypoint>
+                <omgdi:waypoint x="681.0" y="335.0"></omgdi:waypoint>
+                <omgdi:waypoint x="681.0" y="408.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="toProcessLevel0" id="BPMNEdge_toProcessLevel0">
+                <omgdi:waypoint x="480.0" y="355.0"></omgdi:waypoint>
+                <omgdi:waypoint x="483.0" y="555.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="processLevel1Flow" id="BPMNEdge_processLevel1Flow">
+                <omgdi:waypoint x="681.0" y="488.0"></omgdi:waypoint>
+                <omgdi:waypoint x="681.0" y="569.0"></omgdi:waypoint>
+                <omgdi:waypoint x="501.0" y="572.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="processLevel2Flow" id="BPMNEdge_processLevel2Flow">
+                <omgdi:waypoint x="835.0" y="488.0"></omgdi:waypoint>
+                <omgdi:waypoint x="835.0" y="569.0"></omgdi:waypoint>
+                <omgdi:waypoint x="501.0" y="572.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="processLevel3Flow" id="BPMNEdge_processLevel3Flow">
+                <omgdi:waypoint x="985.0" y="485.0"></omgdi:waypoint>
+                <omgdi:waypoint x="985.0" y="569.0"></omgdi:waypoint>
+                <omgdi:waypoint x="501.0" y="572.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
 </definitions>

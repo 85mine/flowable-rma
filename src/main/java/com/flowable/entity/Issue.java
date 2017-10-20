@@ -1,17 +1,6 @@
 package com.flowable.entity;
 
-import org.springframework.format.annotation.NumberFormat;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
 public class Issue {
-
-    @Id
-    @GeneratedValue
-    private Long id;
 
     private String barcode;
 
@@ -46,12 +35,7 @@ public class Issue {
         this.issueLevelDescription = issueLevelDescription;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public Issue() {
     }
 
     public String getBarcode() {
