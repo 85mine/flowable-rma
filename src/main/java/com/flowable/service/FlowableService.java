@@ -1,6 +1,7 @@
 package com.flowable.service;
 
 import com.google.gson.Gson;
+import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
@@ -35,9 +36,8 @@ public class FlowableService {
         variables.put("issue_type_description", params.get("issue_type_description"));
         variables.put("issue_level", params.get("issue_level"));
         variables.put("issue_level_description", params.get("issue_level_description"));
-        System.out.println(variables);
+        System.out.println("Start process: " + variables);
         runtimeService.startProcessInstanceByKey("autoProcess", variables);
-        System.out.println(variables);
         return true;
     }
 
@@ -55,6 +55,7 @@ public class FlowableService {
             variables.put("process_instance_id", task.getProcessInstanceId());
             listTaskVariables.add(variables);
         }
+        System.out.println("Get tasks: " + listTaskVariables);
         return new Gson().toJson(listTaskVariables);
     }
 

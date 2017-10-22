@@ -6,6 +6,7 @@ public class TaskListener implements org.flowable.engine.delegate.TaskListener {
 
     @Override
     public void notify(DelegateTask delegateTask) {
+        System.out.println("Task name:" + delegateTask.getName());
         switch (delegateTask.getTaskDefinitionKey()) {
             case "classifyTask":
                 delegateTask.setAssignee("classifier");

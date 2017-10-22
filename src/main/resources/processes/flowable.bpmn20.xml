@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
              xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
              xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
-             xmlns:flowable="http://flowable.org/bpmn" typeLanguage="http://www.w3.org/2001/XMLSchema"
-             expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+             xmlns:flowable="http://flowable.org/bpmn"
+             targetNamespace="http://www.flowable.org/processdef">
     <process id="autoProcess" name="Auto Task Process" isExecutable="true">
         <startEvent id="startEvent"></startEvent>
-        <userTask id="classifyTask" name="Phân loại lỗi"></userTask>
+        <userTask id="classifyTask" name="Phân loại lỗi">
+            <extensionElements>
+                <flowable:taskListener event="create" class="com.flowable.listener.TaskListener"/>
+            </extensionElements>
+        </userTask>
         <exclusiveGateway id="decision" default="toProcessLevel0"></exclusiveGateway>
         <endEvent id="endEvent"></endEvent>
         <userTask id="processLevel1" name="Xử lý lỗi cấp 1">

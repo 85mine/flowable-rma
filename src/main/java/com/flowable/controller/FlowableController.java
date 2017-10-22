@@ -20,7 +20,6 @@ public class FlowableController {
     @PostMapping(value = "/api/v1/issue/create", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public String createIssue(@RequestBody Map<String, Object> params) throws JsonProcessingException {
-        System.out.println(params.toString());
         if (flowableService.startProcess(params)) {
             return "{\"result_code\":1}";
         }
