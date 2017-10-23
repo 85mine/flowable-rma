@@ -31,7 +31,23 @@ public class FlowableController {
     @ResponseBody
     @ResponseStatus(code = HttpStatus.ACCEPTED)
     public String getTasks(@PathVariable String assignee) throws JsonProcessingException {
-        return flowableService.getTasks(assignee);
+        return flowableService.getTasksAssignee(assignee);
+    }
+
+    @CrossOrigin(origins = "http://bpmn.com")
+    @GetMapping(value = "/api/v1/task/list/all/{issue_id}")
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public String getAllTasks(@PathVariable String issue_id) throws JsonProcessingException {
+        return flowableService.getAllTasks(issue_id);
+    }
+
+    @CrossOrigin(origins = "http://bpmn.com")
+    @GetMapping(value = "/api/v1/task/list/all")
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public String getAllTasks() throws JsonProcessingException {
+        return flowableService.getAllTasks();
     }
 
     @CrossOrigin(origins = "http://bpmn.com")

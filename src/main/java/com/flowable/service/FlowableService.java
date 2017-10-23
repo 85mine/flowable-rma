@@ -1,11 +1,14 @@
 package com.flowable.service;
 
 import com.google.gson.Gson;
-import org.flowable.engine.ProcessEngine;
+import org.flowable.engine.HistoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
+import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
+import org.flowable.task.api.history.HistoricTaskInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +27,9 @@ public class FlowableService {
     @Autowired
     private TaskService taskService;
 
+    @Autowired
+    HistoryService historyService;
+
     public boolean startProcess(Map<String, Object> params) {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("barcode", params.get("barcode"));
@@ -41,22 +47,58 @@ public class FlowableService {
         return true;
     }
 
-    public String getTasks(String assignee) {
-        List<Task> tasks = taskService.createTaskQuery().taskAssignee(assignee).list();
+    public HistoricTaskInstance findPreviousTask(String processInstanceId) {
+        return historyService.createHistoricTaskInstanceQuery().
+                processInstanceId(processInstanceId).orderByHistoricTaskInstanceEndTime().desc().list().get(0);
+    }
+
+    private Map<String, Object> getTaskVariables(Task task) {
+        Map<String, Object> variables = new HashMap<>();
+        HistoricTaskInstance previousTask = findPreviousTask(task.getProcessInstanceId());
+        Map<String, Object> processVariables = taskService.getVariables(task.getId());
+        String issue = new Gson().toJson(processVariables.);
+        variables.put("task_id", task.getId());
+        variables.put("task_name", task.getName());
+        variables.put("task_previous_id", previousTask.getId());
+        variables.put("task_previous_name", previousTask.getName());
+        variables.put("task_description", task.getDescription());
+        variables.put("assignee", task.getAssignee());
+        variables.put("parent_task_id", task.getParentTaskId());
+        variables.put("process_definition_id", task.getProcessDefinitionId());
+        variables.put("process_instance_id", task.getProcessInstanceId());
+        variables.put("issue", issue);
+        return variables;
+    }
+
+    private List<Map<String, Object>> getTasksVariables(List<Task> tasks) {
         List<Map<String, Object>> listTaskVariables = new ArrayList<>();
         for (Task task : tasks
                 ) {
-            Map<String, Object> variables = new HashMap<>();
-            variables.put("task_id", task.getId());
-            variables.put("task_name", task.getName());
-            variables.put("assignee", task.getAssignee());
-            variables.put("parent_task_id", task.getParentTaskId());
-            variables.put("process_definition_id", task.getProcessDefinitionId());
-            variables.put("process_instance_id", task.getProcessInstanceId());
-            listTaskVariables.add(variables);
+            listTaskVariables.add(getTaskVariables(task));
         }
         System.out.println("Get tasks: " + listTaskVariables);
-        return new Gson().toJson(listTaskVariables);
+        return listTaskVariables;
+    }
+
+    private List<Map<String, Object>> getTasksVariablesByProcess(List<ProcessInstance> processInstances) {
+        List<Map<String, Object>> listTaskVariables = new ArrayList<>();
+        for (ProcessInstance processInstance : processInstances
+                ) {
+            List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getProcessInstanceId()).list();
+            listTaskVariables.addAll(getTasksVariables(tasks));
+        }
+        System.out.println("Get tasks: " + listTaskVariables);
+        return listTaskVariables;
+    }
+
+    public String getTasksAssignee(String assignee) {
+        List<Task> tasks = taskService.createTaskQuery().taskAssignee(assignee).list();
+        return new Gson().toJson(getTasksVariables(tasks));
+    }
+
+    public String getAllTasks(String issueId) {
+        List<Task> tasks = taskService.createTaskQuery().processInstanceId(issueId).list();
+        return new Gson().toJson(getTasksVariables(tasks));
     }
 
     public boolean completeTask(String taskId, Map<String, Object> params) {
@@ -71,5 +113,10 @@ public class FlowableService {
     public boolean completeTask(String taskId) {
         taskService.complete(taskId);
         return true;
+    }
+
+    public String getAllTasks() {
+        List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery().list();
+        return new Gson().toJson(getTasksVariablesByProcess(processInstances));
     }
 }

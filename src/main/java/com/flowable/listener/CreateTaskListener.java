@@ -2,7 +2,7 @@ package com.flowable.listener;
 
 import org.flowable.task.service.delegate.DelegateTask;
 
-public class TaskListener implements org.flowable.engine.delegate.TaskListener {
+public class CreateTaskListener implements org.flowable.engine.delegate.TaskListener {
 
     @Override
     public void notify(DelegateTask delegateTask) {
