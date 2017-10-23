@@ -40,13 +40,13 @@
         <sequenceFlow id="toclassifyFlow" sourceRef="startEvent" targetRef="classifyTask"></sequenceFlow>
         <sequenceFlow id="classifyFlow" sourceRef="classifyTask" targetRef="decision"></sequenceFlow>
         <sequenceFlow id="toProcessLevel2" sourceRef="decision" targetRef="processLevel2">
-            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${error_level == '2'}]]></conditionExpression>
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${issue_level == '2'}]]></conditionExpression>
         </sequenceFlow>
         <sequenceFlow id="toProcessLevel3" sourceRef="decision" targetRef="processLevel3">
-            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${error_level == '3'}]]></conditionExpression>
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${issue_level == '3'}]]></conditionExpression>
         </sequenceFlow>
         <sequenceFlow id="toProcessLevel1" sourceRef="decision" targetRef="processLevel1">
-            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${error_level == '1'}]]></conditionExpression>
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${issue_level == '1'}]]></conditionExpression>
         </sequenceFlow>
         <sequenceFlow id="toProcessLevel0" sourceRef="decision" targetRef="endEvent"></sequenceFlow>
         <sequenceFlow id="processLevel1Flow" sourceRef="processLevel1" targetRef="endEvent"></sequenceFlow>

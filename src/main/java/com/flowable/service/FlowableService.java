@@ -31,7 +31,7 @@ public class FlowableService {
     HistoryService historyService;
 
     public boolean startProcess(Map<String, Object> params) {
-        Map<String, Object> variables = new HashMap<String, Object>();
+        Map<String, Object> variables = new HashMap<>();
         variables.put("barcode", params.get("barcode"));
         variables.put("order_id", params.get("order_id"));
         variables.put("apartment_id", params.get("apartment_id"));
@@ -56,7 +56,7 @@ public class FlowableService {
         Map<String, Object> variables = new HashMap<>();
         HistoricTaskInstance previousTask = findPreviousTask(task.getProcessInstanceId());
         Map<String, Object> processVariables = taskService.getVariables(task.getId());
-        String issue = new Gson().toJson(processVariables.);
+        processVariables.remove("task_id");
         variables.put("task_id", task.getId());
         variables.put("task_name", task.getName());
         variables.put("task_previous_id", previousTask.getId());
@@ -66,7 +66,7 @@ public class FlowableService {
         variables.put("parent_task_id", task.getParentTaskId());
         variables.put("process_definition_id", task.getProcessDefinitionId());
         variables.put("process_instance_id", task.getProcessInstanceId());
-        variables.put("issue", issue);
+        variables.putAll(processVariables);
         return variables;
     }
 
@@ -89,6 +89,11 @@ public class FlowableService {
         }
         System.out.println("Get tasks: " + listTaskVariables);
         return listTaskVariables;
+    }
+
+    public String getTask(String task_id) {
+        Task task = taskService.createTaskQuery().taskId(task_id).singleResult();
+        return new Gson().toJson(getTaskVariables(task));
     }
 
     public String getTasksAssignee(String assignee) {

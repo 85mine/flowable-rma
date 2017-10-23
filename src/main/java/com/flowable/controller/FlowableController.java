@@ -27,6 +27,14 @@ public class FlowableController {
     }
 
     @CrossOrigin(origins = "http://bpmn.com")
+    @GetMapping(value = "/api/v1/task/{task_id}")
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public String getTask(@PathVariable String task_id) throws JsonProcessingException {
+        return flowableService.getTask(task_id);
+    }
+
+    @CrossOrigin(origins = "http://bpmn.com")
     @GetMapping(value = "/api/v1/task/list/{assignee}")
     @ResponseBody
     @ResponseStatus(code = HttpStatus.ACCEPTED)
