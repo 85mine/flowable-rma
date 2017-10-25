@@ -1,16 +1,14 @@
 package com.flowable.service;
 
 import com.google.gson.Gson;
-import org.flowable.engine.HistoryService;
-import org.flowable.engine.RuntimeService;
-import org.flowable.engine.TaskService;
+import org.flowable.engine.*;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.history.HistoricTaskInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +26,21 @@ public class FlowableService {
     private TaskService taskService;
 
     @Autowired
+    private RepositoryService repositoryService;
+
+    @Autowired
     HistoryService historyService;
+
+    @Autowired
+    ProcessEngine processEngine;
+
+    public FlowableService() {
+//        processEngine = ProcessEngines.getDefaultProcessEngine();
+//        repositoryService = processEngine.getRepositoryService();
+//        System.out.println("Number of process definitions : " + repositoryService.createProcessDefinitionQuery().count());
+//        System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
+//        System.out.println("Number of tasks after process start: " + taskService.createTaskQuery().count());
+    }
 
     public boolean startProcess(Map<String, Object> params) {
         Map<String, Object> variables = new HashMap<>();
@@ -123,5 +135,9 @@ public class FlowableService {
     public String getAllTasks() {
         List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery().list();
         return new Gson().toJson(getTasksVariablesByProcess(processInstances));
+    }
+
+    public void createDeployment(MultipartFile file) throws Exception {
+        repositoryService.createDeployment().addInputStream(file.getOriginalFilename(), file.getInputStream()).deploy();
     }
 }

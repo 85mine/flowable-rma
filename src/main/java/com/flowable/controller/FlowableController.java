@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -75,4 +76,12 @@ public class FlowableController {
         return "{\"result_code\":0}";
     }
 
+    @CrossOrigin(origins = "http://bpmn.com")
+    @PostMapping(value = "/api/v1/process/deployment", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.ACCEPTED)
+    public String processDeployment(@RequestParam("file") MultipartFile file) throws Exception {
+        flowableService.createDeployment(file);
+        return file.getOriginalFilename();
+    }
 }
