@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:flowable="http://flowable.org/bpmn" typeLanguage="http://www.w3.org/2001/XMLSchema"
+             expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+    <process id="autoProcess" name="Auto Task Process" isExecutable="true">
+        <startEvent id="startEvent"></startEvent>
+        <userTask id="classifyTask" name="issue category">
+            <documentation>Cần phân loại lỗi</documentation>
+            <extensionElements>
+                <activiti:taskListener event="create"
+                                       class="com.flowable.listener.CreateTaskListener"></activiti:taskListener>
+            </extensionElements>
+        </userTask>
+        <exclusiveGateway id="decision" default="toProcessLevel0"></exclusiveGateway>
+        <endEvent id="endEvent"></endEvent>
+        <userTask id="processLevel1" name="Xử lý lỗi cấp 1">
+            <documentation>Cần xử lý lỗi cấp 1</documentation>
+            <extensionElements>
+                <activiti:taskListener event="create"
+                                       class="com.flowable.listener.CreateTaskListener"></activiti:taskListener>
+            </extensionElements>
+        </userTask>
+        <userTask id="processLevel2" name="Xử lý lỗi cấp 2">
+            <documentation>Cần xử lý lỗi cấp 2</documentation>
+            <extensionElements>
+                <activiti:taskListener event="create"
+                                       class="com.flowable.listener.CreateTaskListener"></activiti:taskListener>
+            </extensionElements>
+        </userTask>
+        <userTask id="processLevel3" name="Xử lý lỗi cấp 3">
+            <documentation>Cần xử lý lỗi cấp 3</documentation>
+            <extensionElements>
+                <activiti:taskListener event="create"
+                                       class="com.flowable.listener.CreateTaskListener"></activiti:taskListener>
+            </extensionElements>
+        </userTask>
+        <sequenceFlow id="toclassifyFlow" sourceRef="startEvent" targetRef="classifyTask"></sequenceFlow>
+        <sequenceFlow id="classifyFlow" sourceRef="classifyTask" targetRef="decision"></sequenceFlow>
+        <sequenceFlow id="toProcessLevel2" sourceRef="decision" targetRef="processLevel2">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${issue_level == '2'}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="toProcessLevel3" sourceRef="decision" targetRef="processLevel3">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${issue_level == '3'}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="toProcessLevel1" sourceRef="decision" targetRef="processLevel1">
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${issue_level == '1'}]]></conditionExpression>
+        </sequenceFlow>
+        <sequenceFlow id="toProcessLevel0" sourceRef="decision" targetRef="endEvent"></sequenceFlow>
+        <sequenceFlow id="processLevel1Flow" sourceRef="processLevel1" targetRef="endEvent"></sequenceFlow>
+        <sequenceFlow id="processLevel2Flow" sourceRef="processLevel2" targetRef="endEvent"></sequenceFlow>
+        <sequenceFlow id="processLevel3Flow" sourceRef="processLevel3" targetRef="endEvent"></sequenceFlow>
+    </process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_autoProcess">
+        <bpmndi:BPMNPlane bpmnElement="autoProcess" id="BPMNPlane_autoProcess">
+            <bpmndi:BPMNShape bpmnElement="startEvent" id="BPMNShape_startEvent">
+                <omgdc:Bounds height="35.0" width="35.0" x="462.0" y="61.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="classifyTask" id="BPMNShape_classifyTask">
+                <omgdc:Bounds height="80.0" width="100.0" x="430.0" y="155.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="decision" id="BPMNShape_decision">
+                <omgdc:Bounds height="40.0" width="40.0" x="460.0" y="315.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="endEvent" id="BPMNShape_endEvent">
+                <omgdc:Bounds height="35.0" width="35.0" x="466.0" y="555.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="processLevel1" id="BPMNShape_processLevel1">
+                <omgdc:Bounds height="80.0" width="100.0" x="631.0" y="408.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="processLevel2" id="BPMNShape_processLevel2">
+                <omgdc:Bounds height="80.0" width="100.0" x="785.0" y="408.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="processLevel3" id="BPMNShape_processLevel3">
+                <omgdc:Bounds height="80.0" width="100.0" x="935.0" y="405.0"></omgdc:Bounds>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="toclassifyFlow" id="BPMNEdge_toclassifyFlow">
+                <omgdi:waypoint x="479.0" y="96.0"></omgdi:waypoint>
+                <omgdi:waypoint x="480.0" y="155.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="classifyFlow" id="BPMNEdge_classifyFlow">
+                <omgdi:waypoint x="480.0" y="235.0"></omgdi:waypoint>
+                <omgdi:waypoint x="480.0" y="315.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="toProcessLevel2" id="BPMNEdge_toProcessLevel2">
+                <omgdi:waypoint x="500.0" y="335.0"></omgdi:waypoint>
+                <omgdi:waypoint x="835.0" y="335.0"></omgdi:waypoint>
+                <omgdi:waypoint x="835.0" y="408.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="toProcessLevel3" id="BPMNEdge_toProcessLevel3">
+                <omgdi:waypoint x="500.0" y="335.0"></omgdi:waypoint>
+                <omgdi:waypoint x="985.0" y="335.0"></omgdi:waypoint>
+                <omgdi:waypoint x="985.0" y="405.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="toProcessLevel1" id="BPMNEdge_toProcessLevel1">
+                <omgdi:waypoint x="500.0" y="335.0"></omgdi:waypoint>
+                <omgdi:waypoint x="681.0" y="335.0"></omgdi:waypoint>
+                <omgdi:waypoint x="681.0" y="408.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="toProcessLevel0" id="BPMNEdge_toProcessLevel0">
+                <omgdi:waypoint x="480.0" y="355.0"></omgdi:waypoint>
+                <omgdi:waypoint x="483.0" y="555.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="processLevel1Flow" id="BPMNEdge_processLevel1Flow">
+                <omgdi:waypoint x="681.0" y="488.0"></omgdi:waypoint>
+                <omgdi:waypoint x="681.0" y="569.0"></omgdi:waypoint>
+                <omgdi:waypoint x="501.0" y="572.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="processLevel2Flow" id="BPMNEdge_processLevel2Flow">
+                <omgdi:waypoint x="835.0" y="488.0"></omgdi:waypoint>
+                <omgdi:waypoint x="835.0" y="569.0"></omgdi:waypoint>
+                <omgdi:waypoint x="501.0" y="572.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="processLevel3Flow" id="BPMNEdge_processLevel3Flow">
+                <omgdi:waypoint x="985.0" y="485.0"></omgdi:waypoint>
+                <omgdi:waypoint x="985.0" y="569.0"></omgdi:waypoint>
+                <omgdi:waypoint x="501.0" y="572.0"></omgdi:waypoint>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</definitions>
